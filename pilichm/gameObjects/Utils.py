@@ -1,4 +1,4 @@
-from Constants import RESOURCES_DIR
+from pilichm.gameObjects.Constants import RESOURCES_DIR
 import PIL.Image
 
 
