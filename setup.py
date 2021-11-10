@@ -7,5 +7,5 @@ setup(
    author='Michal Pilichowski',
    author_email='',
    packages=['pilichm.gameObjects'],
-   install_requires=[' PIL', 'random', 'time', 'IPython']
+   install_requires=['Pillow', 'random', 'time', 'IPython']
 )
