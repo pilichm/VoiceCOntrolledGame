@@ -5,7 +5,7 @@ import IPython.display
 import PIL.Image
 from IPython.display import clear_output, display
 
-from Constants import screen_dict, INIT_STATE_FILE, SPRITE_SIZE, COL_COUNT, ROW_COUNT, MAIN_BACKGROUND_FILE, \
+from pilichm.gameObjects.Constants import screen_dict, INIT_STATE_FILE, SPRITE_SIZE, COL_COUNT, ROW_COUNT, MAIN_BACKGROUND_FILE, \
     SPRITE_HEART_BONUS_FILE, SPRITE_SWORD_BONUS_FILE, SPRITE_SWORD_EQUIPPED_FILE, SPRITE_HEART_EQUIPPED_FILE, \
     RESOURCES_DIR, REFRESH_RATE
 from pilichm.gameObjects.Enemy import Enemy
