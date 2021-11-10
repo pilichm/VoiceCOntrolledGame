@@ -1,4 +1,4 @@
-from Constants import SPRITE_ENEMY_1_LIFE, SPRITE_ENEMY_2_LIFES
+from pilichm.gameObjects.Constants import SPRITE_ENEMY_1_LIFE, SPRITE_ENEMY_2_LIFES
 
 
 class Enemy:
