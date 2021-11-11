@@ -1,13 +1,13 @@
-from pilichm.gameObjects.Constants import RESOURCES_DIR
+from pilichm.gameObjects.Constants import SPRITE_FIRE_RED_GIF, SPRITE_FIRE_BLUE_GIF
 import PIL.Image
 
 
 def load_fire_gif(fire_color):
     fire_animation = []
     if fire_color == 'red':
-        fire_gif = PIL.Image.open(f"{RESOURCES_DIR}fire_red_gif.gif")
+        fire_gif = PIL.Image.open(SPRITE_FIRE_RED_GIF)
     elif fire_color == 'blue':
-        fire_gif = PIL.Image.open(f"{RESOURCES_DIR}fire_blue_gif.gif")
+        fire_gif = PIL.Image.open(SPRITE_FIRE_BLUE_GIF)
 
     print(f"Frame count {fire_gif.n_frames}")
 
