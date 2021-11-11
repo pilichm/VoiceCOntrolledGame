@@ -7,7 +7,7 @@ from IPython.display import clear_output, display
 
 from pilichm.gameObjects.Constants import screen_dict, INIT_STATE_FILE, SPRITE_SIZE, COL_COUNT, ROW_COUNT, MAIN_BACKGROUND_FILE, \
     SPRITE_HEART_BONUS_FILE, SPRITE_SWORD_BONUS_FILE, SPRITE_SWORD_EQUIPPED_FILE, SPRITE_HEART_EQUIPPED_FILE, \
-    RESOURCES_DIR, REFRESH_RATE
+    RESOURCES_DIR, REFRESH_RATE, SPRITE_MANA_BOTTLE, SPRITE_MANA_COUNT, SPRITE_GRASS_FILE
 from pilichm.gameObjects.Enemy import Enemy
 from pilichm.gameObjects.Player import Player
 from pilichm.gameObjects.Utils import load_fire_gif
@@ -49,7 +49,7 @@ class GameState:
     # Player attack always hits.
     def player_attack(self):
 
-        if not self.player.is_armed:
+        if not self.player.is_armed or self.player.mana_count <= 0:
             return
 
         condition_one = self.player.pos_x + 1 == self.enemy.pos_x
@@ -57,9 +57,14 @@ class GameState:
         condition_three = self.player.pos_y + 1 == self.enemy.pos_y
         condition_four = self.player.pos_y - 1 == self.enemy.pos_y
 
+        self.player.mana_count -= 2
+
         if condition_one or condition_two or condition_three or condition_four:
             self.enemy.life_count -= 1
             self.enemy.is_attacked = True
+
+            if self.enemy.life_count == 0:
+                self.screen[self.enemy.pos_x][self.enemy.pos_y] = SPRITE_GRASS_FILE
 
     # Enemy attack may miss.
     def enemy_attack(self):
@@ -122,17 +127,23 @@ class GameState:
             for index in range(self.player.life_count):
                 new_image.paste(image_heart, (index * SPRITE_SIZE, 0))
 
+        # Display mana count after life.
+        mana_bottle_image = PIL.Image.open(SPRITE_MANA_BOTTLE)
+        mana_count_image = PIL.Image.open(f"{SPRITE_MANA_COUNT}{self.player.mana_count}.png")
+        new_image.paste(mana_count_image, ((self.player.life_count + 2) * SPRITE_SIZE, 0))
+        new_image.paste(mana_bottle_image, ((self.player.life_count + 3) * SPRITE_SIZE, 0))
+
         # Display sword near life count if player is armed.
         if self.player and self.player.is_armed:
             image = PIL.Image.open(SPRITE_SWORD_EQUIPPED_FILE)
-            new_image.paste(image, ((self.player.life_count + 2) * SPRITE_SIZE, 0))
+            new_image.paste(image, ((self.player.life_count + 4) * SPRITE_SIZE, 0))
 
-        # Display enemy if it has any lifes left.
+        # Display enemy if it has any lives left.
         if self.enemy and self.enemy.life_count > 0:
             image = PIL.Image.open(self.enemy.get_sprite())
             new_image.paste(image, (self.enemy.pos_x * SPRITE_SIZE, self.enemy.pos_y * SPRITE_SIZE))
 
-        # Add attack elemenys if attack happened.
+        # Add attack elements if attack happened.
         frames = [new_image]
         frames = self.get_animation_sprites(frames, new_image)
 
