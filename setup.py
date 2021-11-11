@@ -6,6 +6,6 @@ setup(
    description='',
    author='Michal Pilichowski',
    author_email='',
-   packages=['pilichm.gameObjects', 'pilichm.data'],
+   packages=['pilichm.gameObjects'],
    install_requires=['Pillow', 'IPython']
 )
