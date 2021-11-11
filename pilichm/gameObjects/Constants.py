@@ -1,9 +1,12 @@
+from rootDir import ROOT_DIR
+
 COL_COUNT = 20
 ROW_COUNT = 10
 SPRITE_SIZE = 48
 REFRESH_RATE = 1
 
-RESOURCES_DIR = '/content/VoiceCOntrolledGame/pilichm/data/'
+# RESOURCES_DIR = '/content/VoiceCOntrolledGame/pilichm/data/'
+RESOURCES_DIR = f'{ROOT_DIR}/pilichm/data/'
 
 SPRITE_PLAYER_UNARMED_RIGHT_FILE = f'{RESOURCES_DIR}hero_right.png'
 SPRITE_PLAYER_UNARMED_LEFT_FILE = f'{RESOURCES_DIR}hero_left.png'
