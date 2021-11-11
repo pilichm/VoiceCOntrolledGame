@@ -29,7 +29,7 @@ SPRITE_TREE_FILE = f'{RESOURCES_DIR}terrain/tree_1.png'
 SPRITE_BUSH_FILE = f'{RESOURCES_DIR}terrain/bush_1.png'
 
 # Main game screens.
-MAIN_BACKGROUND_FILE = f'{RESOURCES_DIR}main_screen.png'
+MAIN_BACKGROUND_FILE = f'{RESOURCES_DIR}/screens/main_screen.png'
 
 # Mana bottle and count.
 SPRITE_MANA_BOTTLE = f'{RESOURCES_DIR}mana/mana_bottle.png'
