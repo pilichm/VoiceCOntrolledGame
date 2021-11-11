@@ -1,4 +1,4 @@
-from pilichm.gameObjects.Constants import SPRITE_ENEMY_1_LIFE, SPRITE_ENEMY_2_LIFES
+from pilichm.gameObjects.Constants import SPRITE_ENEMY_1_LIFE, SPRITE_ENEMY_2_LIVES
 
 
 class Enemy:
@@ -10,6 +10,6 @@ class Enemy:
 
     def get_sprite(self):
         if self.life_count == 2:
-            return SPRITE_ENEMY_2_LIFES
+            return SPRITE_ENEMY_2_LIVES
         elif self.life_count == 1:
             return SPRITE_ENEMY_1_LIFE

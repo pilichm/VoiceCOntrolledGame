@@ -130,8 +130,8 @@ class GameState:
         # Display mana count after life.
         mana_bottle_image = PIL.Image.open(SPRITE_MANA_BOTTLE)
         mana_count_image = PIL.Image.open(f"{SPRITE_MANA_COUNT}{self.player.mana_count}.png")
-        new_image.paste(mana_count_image, ((self.player.life_count + 2) * SPRITE_SIZE, 0))
-        new_image.paste(mana_bottle_image, ((self.player.life_count + 3) * SPRITE_SIZE, 0))
+        new_image.paste(mana_count_image, ((self.player.life_count + 1) * SPRITE_SIZE, 0))
+        new_image.paste(mana_bottle_image, ((self.player.life_count + 2) * SPRITE_SIZE, 0))
 
         # Display sword near life count if player is armed.
         if self.player and self.player.is_armed:
@@ -147,9 +147,9 @@ class GameState:
         frames = [new_image]
         frames = self.get_animation_sprites(frames, new_image)
 
-        new_image.save(f"{RESOURCES_DIR}result.gif", save_all=True, append_images=frames, duration=100, loop=0)
+        new_image.save(f"{RESOURCES_DIR}screens/result.gif", save_all=True, append_images=frames, duration=100, loop=0)
         clear_output()
-        display(IPython.display.Image(open(f"{RESOURCES_DIR}result.gif", 'rb').read()))
+        display(IPython.display.Image(open(f"{RESOURCES_DIR}screens/result.gif", 'rb').read()))
 
         # Clear enemy and player state.
         self.player.is_attacked, self.enemy.is_attacked = False, False
