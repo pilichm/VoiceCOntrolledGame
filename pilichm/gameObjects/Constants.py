@@ -1,4 +1,4 @@
-from rootDir import ROOT_DIR
+from pilichm.rootDir import ROOT_DIR
 
 COL_COUNT = 20
 ROW_COUNT = 10
