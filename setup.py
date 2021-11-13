@@ -7,5 +7,5 @@ setup(
    author='Michal Pilichowski',
    author_email='',
    packages=['pilichm.gameObjects'],
-   install_requires=['Pillow', 'IPython', 'playsound']
+   install_requires=['Pillow', 'IPython', 'playsound', 'PyObjC']
 )
