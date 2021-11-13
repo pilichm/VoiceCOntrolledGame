@@ -60,7 +60,6 @@ class GameState:
         mixer.init()
         mixer.music.load(SOUND_PLAYER_ATTACK)
         mixer.music.play()
-        p.play()
 
         if condition_one or condition_two or condition_three or condition_four:
             self.enemy.life_count -= 1
