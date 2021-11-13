@@ -5,12 +5,11 @@ import IPython.display
 import PIL.Image
 from IPython.display import clear_output, display
 
-from pilichm.gameObjects.Constants import screen_dict, INIT_STATE_FILE, SPRITE_SIZE, COL_COUNT, ROW_COUNT, MAIN_BACKGROUND_FILE, \
-    SPRITE_HEART_BONUS_FILE, SPRITE_SWORD_BONUS_FILE, SPRITE_SWORD_EQUIPPED_FILE, SPRITE_HEART_EQUIPPED_FILE, \
-    RESOURCES_DIR, REFRESH_RATE, SPRITE_MANA_BOTTLE, SPRITE_MANA_COUNT, SPRITE_GRASS_FILE
+from pilichm.gameObjects.Constants import *
 from pilichm.gameObjects.Enemy import Enemy
 from pilichm.gameObjects.Player import Player
 from pilichm.gameObjects.Utils import load_fire_gif
+from playsound import playsound
 
 
 class GameState:
@@ -58,6 +57,7 @@ class GameState:
         condition_four = self.player.pos_y - 1 == self.enemy.pos_y
 
         self.player.mana_count -= 2
+        playsound(SOUND_PLAYER_ATTACK)
 
         if condition_one or condition_two or condition_three or condition_four:
             self.enemy.life_count -= 1

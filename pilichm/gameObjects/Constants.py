@@ -47,6 +47,13 @@ SPRITE_BOOK_FILE = f'{RESOURCES_DIR}other/book_1.png'
 SPRITE_FIRE_RED_GIF = f"{RESOURCES_DIR}other/fire_red_gif.gif"
 SPRITE_FIRE_BLUE_GIF = f"{RESOURCES_DIR}other/fire_blue_gif.gif"
 
+# Sound files.
+SOUND_PLAYER_ATTACK = f'{RESOURCES_DIR}sounds/player_attack.mp3'
+SOUND_ENEMY_ATTACK = f'{RESOURCES_DIR}sounds/enemy_attack.mp3'
+SOUND_POWER_UP_PICKED_ATTACK = f'{RESOURCES_DIR}sounds/power_up_picked_up.mp3'
+SOUND_GAME_VICTORY = f'{RESOURCES_DIR}sounds/game_victory.mp3'
+SOUND_GAME_LOSE = f'{RESOURCES_DIR}sounds/game_lose.mp3'
+
 ALLOWED_TERRAIN = [SPRITE_GRASS_FILE, SPRITE_BRIDGE_FILE, SPRITE_HEART_BONUS_FILE, SPRITE_SWORD_BONUS_FILE,
                    SPRITE_BOOK_FILE]
 
