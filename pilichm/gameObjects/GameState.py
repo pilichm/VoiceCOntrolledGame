@@ -9,7 +9,7 @@ from pilichm.gameObjects.Constants import *
 from pilichm.gameObjects.Enemy import Enemy
 from pilichm.gameObjects.Player import Player
 from pilichm.gameObjects.Utils import load_fire_gif
-from playsound import playsound
+import vlc
 
 
 class GameState:
@@ -57,7 +57,8 @@ class GameState:
         condition_four = self.player.pos_y - 1 == self.enemy.pos_y
 
         self.player.mana_count -= 2
-        playsound(SOUND_PLAYER_ATTACK)
+        p = vlc.MediaPlayer(SOUND_PLAYER_ATTACK)
+        p.play()
 
         if condition_one or condition_two or condition_three or condition_four:
             self.enemy.life_count -= 1
