@@ -11,6 +11,7 @@ from pilichm.gameObjects.Enemy import Enemy
 from pilichm.gameObjects.Player import Player
 from pilichm.gameObjects.Utils import load_fire_gif
 
+from lexicon import words_to_lexicon
 
 class GameState:
     def __init__(self, player=Player(), enemy=Enemy()):
@@ -85,6 +86,11 @@ class GameState:
         subprocess.run("ln -s ../phonetisaurus", shell=True)
         subprocess.run("ln -s ../online", shell=True)
         subprocess.run("ln -s ../nagrania", shell=True)
+
+        # Download transcription.
+        subprocess.run("wget https://raw.githubusercontent.com/danijel3/ASRforNLP/main/lexicon.py", shell=True)
+        wordlist = ['dół', 'górę', 'Lewo', 'Prawo', 'W']
+        psyms, wsyms, L = words_to_lexicon(wordlist)
 
     # Player attack always hits.
     def player_attack(self):
