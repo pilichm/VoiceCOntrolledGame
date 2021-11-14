@@ -89,7 +89,7 @@ class GameState:
         subprocess.run("ln -s ../nagrania", shell=True)
 
         # Download transcription.
-        subprocess.run("wget https://raw.githubusercontent.com/danijel3/ASRforNLP/main/lexicon.py", shell=True)
+        # subprocess.run("wget https://raw.githubusercontent.com/danijel3/ASRforNLP/main/lexicon.py", shell=True)
         wordlist = ['dół', 'górę', 'Lewo', 'Prawo', 'W']
         psyms, wsyms, L = words_to_lexicon(wordlist)
 
