@@ -69,6 +69,13 @@ class GameState:
         subprocess.run("tar xvf models.tar.xz > /dev/null", shell=True)
         subprocess.run("rm models.tar.xz", shell=True)
 
+        # Prepare grammar dirs.
+        subprocess.run("mkdir grammar", shell=True)
+        subprocess.run("cd grammar", shell=True)
+        subprocess.run("ln -s ../phonetisaurus", shell=True)
+        subprocess.run("ln -s ../online", shell=True)
+        subprocess.run("ln -s ../nagrania", shell=True)
+
     # Player attack always hits.
     def player_attack(self):
 
