@@ -1,5 +1,5 @@
 import openfst_python as fst
-from Constants import FILE_RECORDINGS_TRANSCRIPTION
+from pilichm.gameObjects.Constants  import FILE_RECORDINGS_TRANSCRIPTION
 
 
 def get_words():
