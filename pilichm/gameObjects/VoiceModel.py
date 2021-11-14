@@ -1,8 +1,6 @@
 import openfst_python as fst
-from pilichm.gameObjects.Constants  import FILE_RECORDINGS_TRANSCRIPTION
 
-
-wordlist = ['W', 'Prawo', 'Lewo', 'dół' 'gorę']
+wordlist = ['W', 'Prawo', 'Lewo', 'dół', 'gorę']
 
 
 def add_arc(sf, st, word, wsyms, g):
