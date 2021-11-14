@@ -75,16 +75,16 @@ class GameState:
         subprocess.run("ldconfig", shell=True)
 
         # Download phonetic and acoustic model.
-        # subprocess.run("wget https://github.com/danijel3/ASRforNLP/releases/download/v1.2/models.tar.xz", shell=True)
-        # subprocess.run("tar xvf models.tar.xz > /dev/null", shell=True)
-        # subprocess.run("rm models.tar.xz", shell=True)
+        subprocess.run("wget https://github.com/danijel3/ASRforNLP/releases/download/v1.2/models.tar.xz", shell=True)
+        subprocess.run("tar xvf models.tar.xz > /dev/null", shell=True)
+        subprocess.run("rm models.tar.xz", shell=True)
 
         # Prepare grammar dirs.
-        # subprocess.run("mkdir grammar", shell=True)
-        # subprocess.run("cd grammar", shell=True)
-        # subprocess.run("ln -s ../phonetisaurus", shell=True)
-        # subprocess.run("ln -s ../online", shell=True)
-        # subprocess.run("ln -s ../nagrania", shell=True)
+        subprocess.run("mkdir grammar", shell=True)
+        os.chdir("/grammar/")
+        subprocess.run("ln -s ../phonetisaurus", shell=True)
+        subprocess.run("ln -s ../online", shell=True)
+        subprocess.run("ln -s ../nagrania", shell=True)
 
     # Player attack always hits.
     def player_attack(self):
