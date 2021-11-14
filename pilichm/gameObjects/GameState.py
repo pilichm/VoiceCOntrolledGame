@@ -1,6 +1,7 @@
 import random
 import time
 import subprocess
+import os
 
 import IPython.display
 import PIL.Image
@@ -59,7 +60,7 @@ class GameState:
 
     def prepare_voice_model(self):
         # Download and prepare kaldi.
-        self.run_command("cd /content/")
+        os.chdir("/content/")
         self.run_command("wget https://github.com/danijel3/ASRforNLP/releases/download/v1.0/kaldi.tar.xz")
         self.run_command("tar xvf kaldi.tar.xz -C / > /dev/null")
         self.run_command("rm kaldi.tar.xz")
