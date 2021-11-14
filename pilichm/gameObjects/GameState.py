@@ -12,7 +12,7 @@ from pilichm.gameObjects.Player import Player
 from pilichm.gameObjects.Utils import load_fire_gif
 
 from lexicon import words_to_lexicon
-
+import openfst_python as fst
 
 class GameState:
     def __init__(self, player=Player(), enemy=Enemy()):
@@ -59,6 +59,11 @@ class GameState:
 
         return screen
 
+    def add_arc(self, sf, st, word, wsyms, g):
+        wid = wsyms.find(word)
+        g.add_arc(sf, fst.Arc(wid, wid, None, st))
+        return g
+
     def prepare_voice_model(self):
         # Download and prepare kaldi.
         # os.chdir("/content/")
@@ -92,6 +97,30 @@ class GameState:
         # subprocess.run("wget https://raw.githubusercontent.com/danijel3/ASRforNLP/main/lexicon.py", shell=True)
         wordlist = ['dół', 'górę', 'Lewo', 'Prawo', 'W']
         psyms, wsyms, L = words_to_lexicon(wordlist)
+        L.set_input_symbols(psyms)
+        L.set_output_symbols(wsyms)
+
+        # Prepare grammar,
+        G = fst.Fst()
+        G.set_input_symbols(wsyms)
+        G.set_output_symbols(wsyms)
+
+        s0 = G.add_state()
+        s1 = G.add_state()
+        s2 = G.add_state()
+
+        G = self.add_arc(s0, s1, 'Nie', wsyms, G)
+        G = self.add_arc(s0, s1, 'Tak', wsyms, G)
+        G = self.add_arc(s0, s1, 'Prawo', wsyms, G)
+        G = self.add_arc(s0, s1, 'Lewo', wsyms, G)
+
+        G = self.add_arc(s0, s2, 'W', wsyms, G)
+
+        G = self.add_arc(s2, s1, 'górę', wsyms, G)
+        G = self.add_arc(s2, s1, 'dół', wsyms, G)
+
+        G.set_start(s0)
+        G.set_final(s1)
 
     # Player attack always hits.
     def player_attack(self):
