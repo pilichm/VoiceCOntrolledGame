@@ -1,4 +1,6 @@
 import openfst_python as fst
+
+from pilichm.gameObjects.Direction import *
 from pilichm.gameObjects.Constants import PATH_TO_GRAMMAR, RECORDING_FILENAME, RESOURCES_DIR, PATH_TO_MODEL_CONF_FILE
 
 wordlist = ['W', 'Prawo', 'Lewo', 'dół', 'górę']
@@ -25,16 +27,17 @@ def create_info_about_recording():
 
 def get_direction_from_prediction(prediction):
     for line in prediction:
-        if line.find('górę') != -1:
-            return 'górę'
-        elif line.find('dół') != -1:
-            return 'dół'
-        elif line.find('lewo') != -1:
-            return 'lewo'
-        elif line.find('prawo') != -1:
-            return 'prawo'
+        line = line.lower()
+        if line.find(Direction.UP.value) != -1:
+            return Direction.UP
+        elif line.find(Direction.DOWN.value) != -1:
+            return Direction.DOWN
+        elif line.find(Direction.LEFT.value) != -1:
+            return Direction.LEFT
+        elif line.find(Direction.RIGHT.value) != -1:
+            return Direction.RIGHT
 
-    return 'nieznany'
+    return Direction.UNKNOWN
 
 
 class VoiceModel:
