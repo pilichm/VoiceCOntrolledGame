@@ -122,6 +122,13 @@ class GameState:
         G.set_start(s0)
         G.set_final(s1)
 
+        Gm = fst.determinize(G.rmepsilon()).minimize()
+        fst.determinize(fst.compose(L, Gm)).minimize().write('LG.fst')
+
+        subprocess.run("fstcomposecontext --context-size=2 --central-position=1 --read-disambig-syms=disambig.int --write-disambig-syms=disambig_ilabels.int ilabels LG.fst CLG.fst", shell=True)
+        subprocess.run("make-h-transducer --disambig-syms-out=disambig_tid.int ilabels online/tree online/final.mdl H.fst", shell=True)
+        subprocess.run("fsttablecompose H.fst CLG.fst - | fstdeterminizestar --use-log=true - - | fstrmsymbols disambig_tid.int - - | fstminimizeencoded - - | add-self-loops --self-loop-scale=0.1 --reorder=true online/final.mdl - HCLG.fst", shell=True)
+
     # Player attack always hits.
     def player_attack(self):
 
