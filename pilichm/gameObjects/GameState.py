@@ -46,7 +46,9 @@ class GameState:
         return screen
 
     def prepare_voice_model(self):
+        # Download and prepare kaldi.
         subprocess.call(["wget", "https://github.com/danijel3/ASRforNLP/releases/download/v1.0/kaldi.tar.xz"])
+        subprocess.call(["tar", "xvf", "kaldi.tar.xz", "-C", "/", ">", "/dev/null"])
 
     # Player attack always hits.
     def player_attack(self):
