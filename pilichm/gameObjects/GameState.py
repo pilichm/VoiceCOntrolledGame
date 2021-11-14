@@ -64,6 +64,11 @@ class GameState:
 
         subprocess.run("ldconfig", shell=True)
 
+        # Download phonetic and acoustic model.
+        subprocess.run("wget https://github.com/danijel3/ASRforNLP/releases/download/v1.2/models.tar.xz", shell=True)
+        subprocess.run("tar xvf models.tar.xz > /dev/null", shell=True)
+        subprocess.run("rm models.tar.xz", shell=True)
+
     # Player attack always hits.
     def player_attack(self):
 
