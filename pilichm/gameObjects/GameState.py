@@ -11,8 +11,6 @@ from pilichm.gameObjects.Enemy import Enemy
 from pilichm.gameObjects.Player import Player
 from pilichm.gameObjects.Utils import load_fire_gif
 
-from lexicon import words_to_lexicon
-import openfst_python as fst
 
 class GameState:
     def __init__(self, player=Player(), enemy=Enemy()):
@@ -58,76 +56,6 @@ class GameState:
                 screen.append(screen_line)
 
         return screen
-
-    def add_arc(self, sf, st, word, wsyms, g):
-        wid = wsyms.find(word)
-        g.add_arc(sf, fst.Arc(wid, wid, None, st))
-        return g
-
-    def prepare_voice_model(self):
-        # Download and prepare kaldi.
-        # os.chdir("/content/")
-        subprocess.run("wget https://github.com/danijel3/ASRforNLP/releases/download/v1.0/kaldi.tar.xz", shell=True)
-        subprocess.run("tar xvf kaldi.tar.xz -C / > /dev/null", shell=True)
-        subprocess.run("rm kaldi.tar.xz", shell=True)
-        subprocess.run("for f in $(find /opt/kaldi -name *.so*) ; do ln -sf $f /usr/local/lib/$(basename $f) ; done",
-                       shell=True)
-        subprocess.run(
-            "for f in $(find /opt/kaldi/src -not -name *.so* -type f -executable) ; do ln -s $f /usr/local/bin/$(basename $f) ; done",
-            shell=True)
-        subprocess.run(
-            "for f in $(find /opt/kaldi/tools -not -name *.so* -type f -executable) ; do ln -s $f /usr/local/bin/$(basename $f) ; done",
-            shell=True)
-
-        subprocess.run("ldconfig", shell=True)
-
-        # Download phonetic and acoustic model.
-        subprocess.run("wget https://github.com/danijel3/ASRforNLP/releases/download/v1.2/models.tar.xz", shell=True)
-        subprocess.run("tar xvf models.tar.xz > /dev/null", shell=True)
-        subprocess.run("rm models.tar.xz", shell=True)
-
-        # Prepare grammar dirs.
-        subprocess.run("mkdir grammar", shell=True)
-        os.chdir("grammar/")
-        subprocess.run("ln -s ../phonetisaurus", shell=True)
-        subprocess.run("ln -s ../online", shell=True)
-        subprocess.run("ln -s ../nagrania", shell=True)
-
-        # Download transcription.
-        # subprocess.run("wget https://raw.githubusercontent.com/danijel3/ASRforNLP/main/lexicon.py", shell=True)
-        wordlist = ['dół', 'górę', 'Lewo', 'Prawo', 'W']
-        psyms, wsyms, L = words_to_lexicon(wordlist)
-        L.set_input_symbols(psyms)
-        L.set_output_symbols(wsyms)
-
-        # Prepare grammar,
-        G = fst.Fst()
-        G.set_input_symbols(wsyms)
-        G.set_output_symbols(wsyms)
-
-        s0 = G.add_state()
-        s1 = G.add_state()
-        s2 = G.add_state()
-
-        G = self.add_arc(s0, s1, 'Nie', wsyms, G)
-        G = self.add_arc(s0, s1, 'Tak', wsyms, G)
-        G = self.add_arc(s0, s1, 'Prawo', wsyms, G)
-        G = self.add_arc(s0, s1, 'Lewo', wsyms, G)
-
-        G = self.add_arc(s0, s2, 'W', wsyms, G)
-
-        G = self.add_arc(s2, s1, 'górę', wsyms, G)
-        G = self.add_arc(s2, s1, 'dół', wsyms, G)
-
-        G.set_start(s0)
-        G.set_final(s1)
-
-        Gm = fst.determinize(G.rmepsilon()).minimize()
-        fst.determinize(fst.compose(L, Gm)).minimize()
-
-        subprocess.run("fstcomposecontext --context-size=2 --central-position=1 --read-disambig-syms=disambig.int --write-disambig-syms=disambig_ilabels.int ilabels LG.fst CLG.fst", shell=True)
-        subprocess.run("make-h-transducer --disambig-syms-out=disambig_tid.int ilabels online/tree online/final.mdl H.fst", shell=True)
-        subprocess.run("fsttablecompose H.fst CLG.fst - | fstdeterminizestar --use-log=true - - | fstrmsymbols disambig_tid.int - - | fstminimizeencoded - - | add-self-loops --self-loop-scale=0.1 --reorder=true online/final.mdl - HCLG.fst", shell=True)
 
     # Player attack always hits.
     def player_attack(self):
