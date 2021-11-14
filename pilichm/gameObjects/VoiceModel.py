@@ -1,4 +1,5 @@
 import openfst_python as fst
+from pilichm.gameObjects.Constants import PATH_TO_GRAMMAR, RECORDING_FILENAME, RESOURCES_DIR, PATH_TO_MODEL_CONF_FILE
 
 wordlist = ['W', 'Prawo', 'Lewo', 'dół', 'górę']
 
@@ -7,6 +8,33 @@ def add_arc(sf, st, word, wsyms, g):
     wid = wsyms.find(word)
     g.add_arc(sf, fst.Arc(wid, wid, None, st))
     return g
+
+
+def change_model_frequency():
+    with open(f'{PATH_TO_MODEL_CONF_FILE}', 'a') as f:
+        f.write('\n--sample-frequency=48000')
+
+
+def create_info_about_recording():
+    with open(f'{PATH_TO_GRAMMAR}wav.scp', 'w+') as f:
+        f.write(f'{RECORDING_FILENAME} {RESOURCES_DIR}recordings/{RECORDING_FILENAME}')
+
+    with open(f'{PATH_TO_GRAMMAR}spk2utt', 'w+') as f:
+        f.write(f'{RECORDING_FILENAME} {RECORDING_FILENAME}')
+
+
+def get_direction_from_prediction(prediction):
+    for line in prediction:
+        if line.find('górę') != -1:
+            return 'górę'
+        elif line.find('dół') != -1:
+            return 'dół'
+        elif line.find('lewo') != -1:
+            return 'lewo'
+        elif line.find('prawo') != -1:
+            return 'prawo'
+
+    return 'nieznany'
 
 
 class VoiceModel:
