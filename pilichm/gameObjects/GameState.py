@@ -61,14 +61,14 @@ class GameState:
         # Download and prepare kaldi.
         # os.chdir("/content/")
         subprocess.run("wget https://github.com/danijel3/ASRforNLP/releases/download/v1.0/kaldi.tar.xz", shell=True)
-        self.run_command("tar xvf kaldi.tar.xz -C / > /dev/null")
-        self.run_command("rm kaldi.tar.xz")
-        self.run_command("for f in $(find /opt/kaldi -name *.so*) ; do ln -sf $f /usr/local/lib/$(basename $f) ; done")
-        self.run_command("for f in $(find /opt/kaldi/src -not -name *.so* -type f -executable) ; do ln -s $f "
-                         "/usr/local/bin/$(basename $f) ; done")
-        self.run_command("for f in $(find /opt/kaldi/tools -not -name *.so* -type f -executable) ; do ln -s $f "
-                         "/usr/local/bin/$(basename $f) ; done")
-        self.run_command("ldconfig")
+        subprocess.run("tar xvf kaldi.tar.xz -C / > /dev/null", shell=True)
+        subprocess.run("rm kaldi.tar.xz", shell=True)
+        # self.run_command("for f in $(find /opt/kaldi -name *.so*) ; do ln -sf $f /usr/local/lib/$(basename $f) ; done")
+        # self.run_command("for f in $(find /opt/kaldi/src -not -name *.so* -type f -executable) ; do ln -s $f "
+        #                  "/usr/local/bin/$(basename $f) ; done")
+        # self.run_command("for f in $(find /opt/kaldi/tools -not -name *.so* -type f -executable) ; do ln -s $f "
+        #                  "/usr/local/bin/$(basename $f) ; done")
+        # self.run_command("ldconfig")
 
         # Download phonetic and acoustic model.
         # subprocess.run("wget https://github.com/danijel3/ASRforNLP/releases/download/v1.2/models.tar.xz", shell=True)
