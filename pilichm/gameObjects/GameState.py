@@ -81,7 +81,7 @@ class GameState:
 
         # Prepare grammar dirs.
         subprocess.run("mkdir grammar", shell=True)
-        os.chdir("/grammar/")
+        os.chdir("grammar/")
         subprocess.run("ln -s ../phonetisaurus", shell=True)
         subprocess.run("ln -s ../online", shell=True)
         subprocess.run("ln -s ../nagrania", shell=True)
