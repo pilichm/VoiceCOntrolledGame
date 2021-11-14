@@ -19,13 +19,13 @@ def add_arc(sf, st, word, wsyms, g):
 
 
 class VoiceModel:
-    def __init__(self):
+    def __init__(self, psyms, wsyms, l):
         self.word_list = get_words()
-        self.l = None
-        self.grammar = None
-
-    def create_grammar(self, psyms, wsyms, l):
         self.l = l
+        self.grammar = None
+        self.create_grammar(psyms, wsyms)
+
+    def create_grammar(self, psyms, wsyms):
         self.l.set_input_symbols(psyms)
         self.l.set_output_symbols(wsyms)
 
