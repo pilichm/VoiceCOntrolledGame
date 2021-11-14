@@ -1,5 +1,6 @@
 import random
 import time
+import subprocess
 
 import IPython.display
 import PIL.Image
@@ -43,6 +44,9 @@ class GameState:
                 screen.append(screen_line)
 
         return screen
+
+    def prepare_voice_model(self):
+        subprocess.call(["wget", "https://github.com/danijel3/ASRforNLP/releases/download/v1.0/kaldi.tar.xz"])
 
     # Player attack always hits.
     def player_attack(self):
