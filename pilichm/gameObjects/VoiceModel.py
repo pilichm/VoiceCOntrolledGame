@@ -2,14 +2,7 @@ import openfst_python as fst
 from pilichm.gameObjects.Constants  import FILE_RECORDINGS_TRANSCRIPTION
 
 
-def get_words():
-    word_dict = []
-    with open(FILE_RECORDINGS_TRANSCRIPTION) as f:
-        for line in f:
-            for word in line.split():
-                word_dict.append(word.strip())
-
-    return word_dict
+wordlist = ['W', 'Prawo', 'Lewo', 'dół' 'gorę']
 
 
 def add_arc(sf, st, word, wsyms, g):
