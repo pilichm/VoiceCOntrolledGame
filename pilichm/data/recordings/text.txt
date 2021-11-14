@@ -1,0 +1,10 @@
+Nagrywanie007 Prawo
+Nagrywanie008 Prawo
+Nagrywanie009 Prawo
+Nagrywanie010 Lewo
+Nagrywanie011 Lewo
+Nagrywanie012 Lewo
+Nagrywanie013 W górę
+Nagrywanie014 W górę
+Nagrywanie015 W dół
+Nagrywanie016 W dół
