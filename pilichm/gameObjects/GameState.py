@@ -30,6 +30,18 @@ class GameState:
     def move_player_left(self):
         self.player.move_left(self.screen)
 
+    def run_command(self, command):
+        process = subprocess.Popen("bash for i in {1..3}; do echo ${i}; done")
+        try:
+            outs, errs = process.communicate()
+            print(f'Command result: {outs}')
+            print(f'Command errors: {errs}')
+        except Exception as e:
+            process.kill()
+            outs, errs = process.communicate()
+            print(f'Command result: {outs}')
+            print(f'Command errors: {errs}')
+
     # Load initial game screen based on game_init_state.csv file.
     def load_screen_from_state(self):
         screen = []
@@ -47,34 +59,27 @@ class GameState:
 
     def prepare_voice_model(self):
         # Download and prepare kaldi.
-        subprocess.run("wget https://github.com/danijel3/ASRforNLP/releases/download/v1.0/kaldi.tar.xz", shell=True)
-        subprocess.run("tar xvf kaldi.tar.xz -C / > /dev/null", shell=True)
-        subprocess.run("rm kaldi.tar.xz", shell=True)
-
-        subprocess.run("for f in $(find /opt/kaldi -name *.so*) ; do ln -sf $f /usr/local/lib/$(basename $f) ; done",
-                       shell=True)
-        subprocess.run(
-            "for f in $(find /opt/kaldi/src -not -name *.so* -type f -executable) ; do ln -s $f /usr/local/bin/$("
-            "basename $f) ; done",
-            shell=True)
-        subprocess.run(
-            "for f in $(find /opt/kaldi/tools -not -name *.so* -type f -executable) ; do ln -s $f /usr/local/bin/$("
-            "basename $f) ; done",
-            shell=True)
-
-        subprocess.run("ldconfig", shell=True)
+        self.run_command("wget https://github.com/danijel3/ASRforNLP/releases/download/v1.0/kaldi.tar.xz")
+        self.run_command("tar xvf kaldi.tar.xz -C / > /dev/null")
+        self.run_command("rm kaldi.tar.xz")
+        self.run_command("for f in $(find /opt/kaldi -name *.so*) ; do ln -sf $f /usr/local/lib/$(basename $f) ; done")
+        self.run_command("for f in $(find /opt/kaldi/src -not -name *.so* -type f -executable) ; do ln -s $f "
+                         "/usr/local/bin/$(basename $f) ; done")
+        self.run_command("for f in $(find /opt/kaldi/tools -not -name *.so* -type f -executable) ; do ln -s $f "
+                         "/usr/local/bin/$(basename $f) ; done")
+        self.run_command("ldconfig")
 
         # Download phonetic and acoustic model.
-        subprocess.run("wget https://github.com/danijel3/ASRforNLP/releases/download/v1.2/models.tar.xz", shell=True)
-        subprocess.run("tar xvf models.tar.xz > /dev/null", shell=True)
-        subprocess.run("rm models.tar.xz", shell=True)
+        # subprocess.run("wget https://github.com/danijel3/ASRforNLP/releases/download/v1.2/models.tar.xz", shell=True)
+        # subprocess.run("tar xvf models.tar.xz > /dev/null", shell=True)
+        # subprocess.run("rm models.tar.xz", shell=True)
 
         # Prepare grammar dirs.
-        subprocess.run("mkdir grammar", shell=True)
-        subprocess.run("cd grammar", shell=True)
-        subprocess.run("ln -s ../phonetisaurus", shell=True)
-        subprocess.run("ln -s ../online", shell=True)
-        subprocess.run("ln -s ../nagrania", shell=True)
+        # subprocess.run("mkdir grammar", shell=True)
+        # subprocess.run("cd grammar", shell=True)
+        # subprocess.run("ln -s ../phonetisaurus", shell=True)
+        # subprocess.run("ln -s ../online", shell=True)
+        # subprocess.run("ln -s ../nagrania", shell=True)
 
     # Player attack always hits.
     def player_attack(self):
