@@ -11,7 +11,8 @@ from pilichm.gameObjects.Enemy import Enemy
 from pilichm.gameObjects.Player import Player
 from pilichm.gameObjects.Utils import load_fire_gif
 
-from ASRforNLP
+from lexicon import words_to_lexicon
+
 
 class GameState:
     def __init__(self, player=Player(), enemy=Enemy()):
