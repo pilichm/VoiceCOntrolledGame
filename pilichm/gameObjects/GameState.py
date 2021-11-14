@@ -12,16 +12,6 @@ from pilichm.gameObjects.Player import Player
 from pilichm.gameObjects.Utils import load_fire_gif
 
 
-def get_words():
-    word_dict = []
-    with open('/content/VoiceCOntrolledGame/pilichm/data/recordings/text.txt') as f:
-        for line in f:
-            for word in line.split():
-                word_dict.append(word)
-
-    return word_dict
-
-
 class GameState:
     def __init__(self, player=Player(), enemy=Enemy()):
         self.screen = self.load_screen_from_state()
