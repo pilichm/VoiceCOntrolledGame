@@ -47,8 +47,22 @@ class GameState:
 
     def prepare_voice_model(self):
         # Download and prepare kaldi.
-        subprocess.call(["wget", "https://github.com/danijel3/ASRforNLP/releases/download/v1.0/kaldi.tar.xz"])
-        subprocess.call(["tar", "xvf", "kaldi.tar.xz", "-C", "/", ">", "/dev/null"])
+        subprocess.run("wget https://github.com/danijel3/ASRforNLP/releases/download/v1.0/kaldi.tar.xz", shell=True)
+        subprocess.run("tar xvf kaldi.tar.xz -C / > /dev/null", shell=True)
+        subprocess.run("rm kaldi.tar.xz", shell=True)
+
+        subprocess.run("for f in $(find /opt/kaldi -name *.so*) ; do ln -sf $f /usr/local/lib/$(basename $f) ; done",
+                       shell=True)
+        subprocess.run(
+            "for f in $(find /opt/kaldi/src -not -name *.so* -type f -executable) ; do ln -s $f /usr/local/bin/$("
+            "basename $f) ; done",
+            shell=True)
+        subprocess.run(
+            "for f in $(find /opt/kaldi/tools -not -name *.so* -type f -executable) ; do ln -s $f /usr/local/bin/$("
+            "basename $f) ; done",
+            shell=True)
+
+        subprocess.run("ldconfig", shell=True)
 
     # Player attack always hits.
     def player_attack(self):
