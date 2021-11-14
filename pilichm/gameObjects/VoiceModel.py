@@ -1,6 +1,6 @@
 import openfst_python as fst
 
-wordlist = ['W', 'Prawo', 'Lewo', 'dół', 'gorę']
+wordlist = ['W', 'Prawo', 'Lewo', 'dół', 'górę']
 
 
 def add_arc(sf, st, word, wsyms, g):
