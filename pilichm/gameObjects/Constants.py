@@ -30,6 +30,8 @@ SPRITE_BUSH_FILE = f'{RESOURCES_DIR}terrain/bush_1.png'
 
 # Main game screens.
 MAIN_BACKGROUND_FILE = f'{RESOURCES_DIR}/screens/main_screen.png'
+SCREEN_VICTORY_FILE = f'{RESOURCES_DIR}/screens/game_win_screen.jpg'
+SCREEN_FAILURE_FILE = f'{RESOURCES_DIR}/screens/game_lose_screen.jpg'
 
 # Mana bottle and count.
 SPRITE_MANA_BOTTLE = f'{RESOURCES_DIR}mana/mana_bottle.png'

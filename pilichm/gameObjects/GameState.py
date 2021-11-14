@@ -17,6 +17,8 @@ class GameState:
         self.screen = self.load_screen_from_state()
         self.player = player
         self.enemy = enemy
+        self.has_ended = False
+        self.is_won = False
 
     def move_player_up(self):
         self.player.move_up(self.screen)
@@ -164,6 +166,25 @@ class GameState:
 
         # Clear enemy and player state.
         self.player.is_attacked, self.enemy.is_attacked = False, False
+
+    def check_has_ended(self):
+        if self.player.life_count <= 0:
+            self.has_ended = True
+            self.is_won = False
+            return
+
+        if self.screen[self.player.pos_x + 1][self.player.pos_y] in [SPRITE_BOOK_FILE]:
+            self.has_ended = True
+            self.is_won = True
+            return
+
+    def display_end_screen(self):
+        clear_output()
+        if self.is_won:
+            end_image = PIL.Image.open(SCREEN_VICTORY_FILE)
+        else:
+            end_image = PIL.Image.open(SCREEN_FAILURE_FILE)
+        display(end_image)
 
     # Play mock game run without voice commands.
     def run(self):
