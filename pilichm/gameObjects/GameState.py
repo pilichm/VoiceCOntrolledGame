@@ -31,7 +31,7 @@ class GameState:
         self.player.move_left(self.screen)
 
     def run_command(self, command):
-        process = subprocess.Popen("bash for i in {1..3}; do echo ${i}; done")
+        process = subprocess.Popen(command)
         try:
             outs, errs = process.communicate()
             print(f'Command result: {outs}')
