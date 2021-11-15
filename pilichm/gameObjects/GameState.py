@@ -10,6 +10,7 @@ from pilichm.gameObjects.Constants import *
 from pilichm.gameObjects.Enemy import Enemy
 from pilichm.gameObjects.Player import Player
 from pilichm.gameObjects.Utils import load_fire_gif
+from pilichm.gameObjects.Direction import *
 
 
 class GameState:
@@ -185,6 +186,16 @@ class GameState:
         else:
             end_image = PIL.Image.open(SCREEN_FAILURE_FILE)
         display(end_image)
+
+    def perform_player_action(self, direction):
+        if direction == Direction.RIGHT:
+            self.move_player_right()
+        elif direction == Direction.LEFT:
+            self.move_player_left()
+        elif direction == Direction.UP:
+            self.move_player_up()
+        elif direction == Direction.DOWN:
+            self.move_player_down()
 
     # Play mock game run without voice commands.
     def run(self):
