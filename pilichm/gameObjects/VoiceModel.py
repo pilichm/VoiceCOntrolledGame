@@ -1,4 +1,5 @@
 import openfst_python as fst
+import re
 
 from pilichm.gameObjects.Direction import *
 from pilichm.gameObjects.Constants import PATH_TO_GRAMMAR, RECORDING_FILENAME, RESOURCES_DIR, PATH_TO_MODEL_CONF_FILE
@@ -38,6 +39,19 @@ def get_direction_from_prediction(prediction):
             return Direction.RIGHT
 
     return Direction.UNKNOWN
+
+
+def check_cost(prediction):
+    pattern = re.compile("\d{1,6}\.\d{1,6} over")
+
+    for line in prediction:
+        result = pattern.search(line)
+        if result:
+            result = result.group(0)
+            result = result.split(' ')[0]
+            return float(result)
+
+    return 0
 
 
 class VoiceModel:
