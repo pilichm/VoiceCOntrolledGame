@@ -71,12 +71,18 @@ class VoiceModel:
 
         s0 = self.grammar.add_state()
         s1 = self.grammar.add_state()
+        s2 = self.grammar.add_state()
+        s3 = self.grammar.add_state()
+        s4 = self.grammar.add_state()
 
         self.grammar = add_arc(s0, s1, 'prawo', wsyms, self.grammar)
-        self.grammar = add_arc(s0, s1, 'lewo', wsyms, self.grammar)
-        self.grammar = add_arc(s0, s1, 'góra', wsyms, self.grammar)
-        self.grammar = add_arc(s0, s1, 'dół', wsyms, self.grammar)
+        self.grammar = add_arc(s0, s2, 'lewo', wsyms, self.grammar)
+        self.grammar = add_arc(s0, s3, 'góra', wsyms, self.grammar)
+        self.grammar = add_arc(s0, s4, 'dół', wsyms, self.grammar)
 
         self.grammar.set_start(s0)
         self.grammar.set_final(s1)
+        self.grammar.set_final(s2)
+        self.grammar.set_final(s3)
+        self.grammar.set_final(s4)
         self.grammar = fst.determinize(self.grammar.rmepsilon()).minimize()
