@@ -85,4 +85,4 @@ class VoiceModel:
         self.grammar.set_final(s2)
         self.grammar.set_final(s3)
         self.grammar.set_final(s4)
-        self.grammar = fst.determinize(self.grammar.rmepsilon()).minimize()
+        self.grammar = fst.determinize(self.grammar.rmepsilon())
