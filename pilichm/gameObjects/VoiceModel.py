@@ -5,7 +5,7 @@ import re
 from pilichm.gameObjects.Direction import *
 from pilichm.gameObjects.Constants import PATH_TO_GRAMMAR, RECORDING_FILENAME, RESOURCES_DIR, PATH_TO_MODEL_CONF_FILE
 
-wordlist = ['prawo', 'lewo', 'dół', 'góra']
+wordlist = ['w', 'prawo', 'lewo', 'dół', 'góra']
 
 
 def add_arc(sf, st, word, wsyms, g):
@@ -44,7 +44,6 @@ def get_audio_without_initial_silence(silence_threshold=-50.0, chunk_size=10):
     duration = len(sound)
     trimmed_sound = sound[start_trim:duration - end_trim]
     trimmed_sound.export("/content/VoiceCOntrolledGame/pilichm/data/recordings/Nagranie.wav", format="wav")
-
 
 
 def get_direction_from_prediction(prediction):
@@ -93,17 +92,13 @@ class VoiceModel:
         s0 = self.grammar.add_state()
         s1 = self.grammar.add_state()
         s2 = self.grammar.add_state()
-        s3 = self.grammar.add_state()
-        s4 = self.grammar.add_state()
 
         self.grammar = add_arc(s0, s1, 'prawo', wsyms, self.grammar)
-        self.grammar = add_arc(s0, s2, 'lewo', wsyms, self.grammar)
-        self.grammar = add_arc(s0, s3, 'góra', wsyms, self.grammar)
-        self.grammar = add_arc(s0, s4, 'dół', wsyms, self.grammar)
+        self.grammar = add_arc(s0, s1, 'lewo', wsyms, self.grammar)
+        self.grammar = add_arc(s0, s1, 'góra', wsyms, self.grammar)
+        self.grammar = add_arc(s0, s2, 'w', wsyms, self.grammar)
+        self.grammar = add_arc(s2, s1, 'dół', wsyms, self.grammar)
 
         self.grammar.set_start(s0)
         self.grammar.set_final(s1)
-        self.grammar.set_final(s2)
-        self.grammar.set_final(s3)
-        self.grammar.set_final(s4)
         self.grammar = fst.determinize(self.grammar.rmepsilon())
