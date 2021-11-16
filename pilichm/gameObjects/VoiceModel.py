@@ -5,7 +5,7 @@ import re
 from pilichm.gameObjects.Direction import *
 from pilichm.gameObjects.Constants import PATH_TO_GRAMMAR, RECORDING_FILENAME, RESOURCES_DIR, PATH_TO_MODEL_CONF_FILE
 
-wordlist = ['w', 'lewo', 'prawo', 'góry', 'dołu', 'do']
+wordlist = ['zaklęcie', 'kula', 'ognia', 'leczenie', 'wykonaj', 'kolejny', 'ruch', 'podnieś', 'przedmiot']
 
 
 def add_arc(sf, st, word, wsyms, g):
@@ -89,21 +89,31 @@ class VoiceModel:
         self.grammar.set_input_symbols(wsyms)
         self.grammar.set_output_symbols(wsyms)
 
+        wordlist = ['zaklęcie', 'kula', 'ognia', 'leczenie', 'wykonaj', 'kolejny', 'ruch', 'podnieś', 'przedmiot']
+
         s0 = self.grammar.add_state()
         s1 = self.grammar.add_state()
         s2 = self.grammar.add_state()
         s3 = self.grammar.add_state()
 
-        self.grammar = add_arc(s0, s1, 'w', wsyms, self.grammar)
-        self.grammar = add_arc(s0, s2, 'do', wsyms, self.grammar)
+        s4 = self.grammar.add_state()
+        s5 = self.grammar.add_state()
+        s6 = self.grammar.add_state()
 
-        self.grammar = add_arc(s1, s3, 'lewo', wsyms, self.grammar)
-        self.grammar = add_arc(s1, s3, 'prawo', wsyms, self.grammar)
+        self.grammar = add_arc(s0, s1, 'zaklęcie', wsyms, self.grammar)
+        self.grammar = add_arc(s0, s2, 'wykonaj', wsyms, self.grammar)
+        self.grammar = add_arc(s0, s3, 'podnieś', wsyms, self.grammar)
 
-        self.grammar = add_arc(s2, s3, 'góry', wsyms, self.grammar)
-        self.grammar = add_arc(s2, s3, 'dołu', wsyms, self.grammar)
+        self.grammar = add_arc(s1, s4, 'kula', wsyms, self.grammar)
+        self.grammar = add_arc(s1, s5, 'leczenie', wsyms, self.grammar)
+        self.grammar = add_arc(s4, s5, 'ognia', wsyms, self.grammar)
+
+        self.grammar = add_arc(s2, s6, 'kolejny', wsyms, self.grammar)
+        self.grammar = add_arc(s6, s5, 'ruch', wsyms, self.grammar)
+
+        self.grammar = add_arc(s3, s5, 'przedmiot', wsyms, self.grammar)
 
         self.grammar.set_start(s0)
-        self.grammar.set_final(s3)
+        self.grammar.set_final(s5)
 
         self.grammar = fst.determinize(self.grammar.rmepsilon())
