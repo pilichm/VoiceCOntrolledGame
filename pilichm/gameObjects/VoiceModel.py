@@ -1,4 +1,5 @@
 import openfst_python as fst
+from pydub import AudioSegment
 import re
 
 from pilichm.gameObjects.Direction import *
@@ -24,6 +25,26 @@ def create_info_about_recording():
 
     with open(f'{PATH_TO_GRAMMAR}spk2utt', 'w+') as f:
         f.write(f'{RECORDING_FILENAME} {RECORDING_FILENAME}')
+
+
+def get_trim_index(sound, silence_threshold=-50.0, chunk_size=10):
+    trim_ms = 0
+
+    assert chunk_size > 0
+    while sound[trim_ms:trim_ms + chunk_size].dBFS < silence_threshold and trim_ms < len(sound):
+        trim_ms += chunk_size
+
+    return trim_ms
+
+
+def get_audio_without_initial_silence(silence_threshold=-50.0, chunk_size=10):
+    sound = AudioSegment.from_file("/content/VoiceCOntrolledGame/pilichm/data/recordings/Nagranie.wav", format="wav")
+    start_trim = get_trim_index(sound)
+    end_trim = get_trim_index(sound.reverse())
+    duration = len(sound)
+    trimmed_sound = sound[start_trim:duration - end_trim]
+    trimmed_sound.export("/content/VoiceCOntrolledGame/pilichm/data/recordings/Nagranie.wav", format="wav")
+
 
 
 def get_direction_from_prediction(prediction):
