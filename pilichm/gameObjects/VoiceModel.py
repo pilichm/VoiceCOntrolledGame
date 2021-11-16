@@ -98,7 +98,7 @@ class VoiceModel:
         self.grammar = add_arc(s0, s1, 'prawo', wsyms, self.grammar)
         self.grammar = add_arc(s0, s2, 'lewo', wsyms, self.grammar)
         self.grammar = add_arc(s0, s3, 'góra', wsyms, self.grammar)
-        self.grammar = add_arc(s1, s4, 'dół', wsyms, self.grammar)
+        self.grammar = add_arc(s0, s4, 'dół', wsyms, self.grammar)
 
         s5 = self.grammar.add_state()
         s6 = self.grammar.add_state()
