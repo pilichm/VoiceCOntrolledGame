@@ -71,12 +71,10 @@ class VoiceModel:
 
         s0 = self.grammar.add_state()
         s1 = self.grammar.add_state()
-        s2 = self.grammar.add_state()
 
-        self.grammar = add_arc(s0, s1, 'Prawo', wsyms, self.grammar)
-        self.grammar = add_arc(s0, s1, 'Lewo', wsyms, self.grammar)
-        # self.grammar = add_arc(s0, s2, 'W', wsyms, self.grammar)
-        self.grammar = add_arc(s0, s1, 'górę', wsyms, self.grammar)
+        self.grammar = add_arc(s0, s1, 'prawo', wsyms, self.grammar)
+        self.grammar = add_arc(s0, s1, 'lewo', wsyms, self.grammar)
+        self.grammar = add_arc(s0, s1, 'góra', wsyms, self.grammar)
         self.grammar = add_arc(s0, s1, 'dół', wsyms, self.grammar)
 
         self.grammar.set_start(s0)
