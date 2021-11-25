@@ -4,6 +4,7 @@ from pilichm.gameObjects.GameState import GameState
 if __name__ == "__main__":
     print("main() - START.")
 
-    game = GameState()
+    for i in range(20_000):
+        print(f"<eps> {i}")
 
     print("main() - END.")
