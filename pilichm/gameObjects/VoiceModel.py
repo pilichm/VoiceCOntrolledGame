@@ -6,7 +6,7 @@ from pilichm.gameObjects.Direction import *
 from pilichm.gameObjects.Constants import PATH_TO_GRAMMAR, RECORDING_FILENAME, RESOURCES_DIR, PATH_TO_MODEL_CONF_FILE
 
 # wordlist = ['zaklęcie', 'kula', 'ognia', 'leczenie', 'podnieś', 'przedmiot', 'do', 'w', 'prawo', 'lewo', 'góry', 'dołu']
-wordlist = ['lewo', 'prawo', 'góra', 'dół']
+wordlist = ['lewo', 'prawo', 'gora', 'dol']
 
 def add_arc(sf, st, word, wsyms, g):
     wid = wsyms.find(word)
@@ -97,8 +97,8 @@ class VoiceModel:
 
         self.grammar = add_arc(s0, s1, 'lewo', wsyms, self.grammar)
         self.grammar = add_arc(s0, s1, 'prawo', wsyms, self.grammar)
-        self.grammar = add_arc(s0, s1, 'góra', wsyms, self.grammar)
-        self.grammar = add_arc(s0, s1, 'dół', wsyms, self.grammar)
+        self.grammar = add_arc(s0, s1, 'gora', wsyms, self.grammar)
+        self.grammar = add_arc(s0, s1, 'dol', wsyms, self.grammar)
 
         self.grammar.set_start(s0)
         self.grammar.set_final(s1)
