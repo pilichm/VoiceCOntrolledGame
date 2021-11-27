@@ -32,6 +32,7 @@ SPRITE_BUSH_FILE = f'{RESOURCES_DIR}terrain/bush_1.png'
 MAIN_BACKGROUND_FILE = f'{RESOURCES_DIR}/screens/main_screen.png'
 SCREEN_VICTORY_FILE = f'{RESOURCES_DIR}/screens/game_win_screen.jpg'
 SCREEN_FAILURE_FILE = f'{RESOURCES_DIR}/screens/game_lose_screen.jpg'
+SCREEN_QUESTION_BACKGROUND = f'{RESOURCES_DIR}/screens/main_screen_question.png'
 
 # Mana bottle and count.
 SPRITE_MANA_BOTTLE = f'{RESOURCES_DIR}mana/mana_bottle.png'
@@ -48,6 +49,7 @@ SPRITE_FLAG_FILE = f'{RESOURCES_DIR}other/terrain/flag_1.png'
 SPRITE_BOOK_FILE = f'{RESOURCES_DIR}other/book_1.png'
 SPRITE_FIRE_RED_GIF = f"{RESOURCES_DIR}other/fire_red_gif.gif"
 SPRITE_FIRE_BLUE_GIF = f"{RESOURCES_DIR}other/fire_blue_gif.gif"
+SPRITE_MAIN_ENEMY = f'{RESOURCES_DIR}other/main_enemy_'
 
 # Sound files.
 SOUND_PLAYER_ATTACK = f'{RESOURCES_DIR}sounds/player_attack.mp3'

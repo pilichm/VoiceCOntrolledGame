@@ -173,6 +173,25 @@ class GameState:
         # Clear enemy and player state.
         self.player.is_attacked, self.enemy.is_attacked = False, False
 
+    def display_question_screen(self):
+        new_image = PIL.Image.new('RGBA', (COL_COUNT * SPRITE_SIZE, ROW_COUNT * SPRITE_SIZE), (250, 250, 250))
+        background = PIL.Image.open(SCREEN_QUESTION_BACKGROUND)
+        new_image.paste(background, (0, 0))
+
+        # Add frames for main enemy animation.
+        frames = [new_image]
+        for i in range(1, 4):
+            temp_image = new_image.copy()
+            main_enemy_sprite = PIL.Image.open(f'{SPRITE_MAIN_ENEMY}{i}.png')
+            temp_image.paste(main_enemy_sprite, (8 * SPRITE_SIZE, 3 * SPRITE_SIZE))
+            frames.append(temp_image)
+
+        new_image.save(f"{RESOURCES_DIR}screens/result.gif", save_all=True, append_images=frames, duration=100, loop=0)
+        clear_output()
+        display(IPython.display.Image(open(f"{RESOURCES_DIR}screens/result.gif", 'rb').read()))
+        self.has_ended = False
+        self.is_won = False
+
     def check_has_ended(self):
         if self.player.life_count <= 0:
             self.has_ended = True
