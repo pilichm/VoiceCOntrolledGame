@@ -49,8 +49,9 @@ def get_audio_without_initial_silence(silence_threshold=-50.0, chunk_size=10):
 
 def get_action_from_prediction(prediction):
     for action in Action:
-        if action.value in prediction:
-            return action
+        for line in prediction:
+            if action.value in line:
+                return action
 
     return Action.UNKNOWN
 
