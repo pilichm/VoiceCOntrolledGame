@@ -180,13 +180,15 @@ class GameState:
         new_image = PIL.Image.new('RGBA', (COL_COUNT * SPRITE_SIZE, ROW_COUNT * SPRITE_SIZE), (250, 250, 250))
         background = PIL.Image.open(SCREEN_QUESTION_BACKGROUND)
         new_image.paste(background, (0, 0))
+        main_enemy_sprite = PIL.Image.open(f'{SPRITE_MAIN_ENEMY}1.png')
+        new_image.paste(main_enemy_sprite, (8 * SPRITE_SIZE, 1 * SPRITE_SIZE))
 
         # Add frames for main enemy animation.
         frames = []
-        for i in range(1, 4):
+        for i in range(2, 4):
             temp_image = new_image.copy()
             main_enemy_sprite = PIL.Image.open(f'{SPRITE_MAIN_ENEMY}{i}.png')
-            temp_image.paste(main_enemy_sprite, (8 * SPRITE_SIZE, 3 * SPRITE_SIZE))
+            temp_image.paste(main_enemy_sprite, (8 * SPRITE_SIZE, 1 * SPRITE_SIZE))
             frames.append(temp_image)
 
         new_image.save(f"{RESOURCES_DIR}screens/result.gif", save_all=True, append_images=frames, duration=100, loop=0)
