@@ -163,8 +163,11 @@ class GameState:
             new_image.paste(image, (self.enemy.pos_x * SPRITE_SIZE, self.enemy.pos_y * SPRITE_SIZE))
 
         # Add attack elements if attack happened.
-        frames = [new_image]
+        frames = []
         frames = self.get_animation_sprites(frames, new_image)
+
+        if len(frames) == 0:
+            frames.append(background)
 
         new_image.save(f"{RESOURCES_DIR}screens/result.gif", save_all=True, append_images=frames, duration=100, loop=0)
         clear_output()
@@ -179,7 +182,7 @@ class GameState:
         new_image.paste(background, (0, 0))
 
         # Add frames for main enemy animation.
-        frames = [new_image]
+        frames = []
         for i in range(1, 4):
             temp_image = new_image.copy()
             main_enemy_sprite = PIL.Image.open(f'{SPRITE_MAIN_ENEMY}{i}.png')
