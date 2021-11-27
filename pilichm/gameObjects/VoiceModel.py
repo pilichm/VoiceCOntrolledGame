@@ -2,11 +2,12 @@ import openfst_python as fst
 from pydub import AudioSegment
 import re
 
-from pilichm.gameObjects.Direction import *
+from pilichm.gameObjects.Action import *
 from pilichm.gameObjects.Constants import PATH_TO_GRAMMAR, RECORDING_FILENAME, RESOURCES_DIR, PATH_TO_MODEL_CONF_FILE
 
-wordlist = ['zaklęcie', 'kula', 'ognia', 'leczenie', 'podnieś', 'przedmiot', 'do', 'w', 'prawo', 'lewo', 'góry', 'dołu']
-# wordlist = ['lewo', 'prawo', 'gora', 'dol']
+wordlist = ['zaklęcie', 'kula', 'ognia', 'leczenie', 'podnieś', 'przedmiot', 'do',
+            'w', 'prawo', 'lewo', 'góry', 'dołu']
+
 
 def add_arc(sf, st, word, wsyms, g):
     wid = wsyms.find(word)
@@ -46,19 +47,12 @@ def get_audio_without_initial_silence(silence_threshold=-50.0, chunk_size=10):
     trimmed_sound.export("/content/VoiceCOntrolledGame/pilichm/data/recordings/Nagranie.wav", format="wav")
 
 
-def get_direction_from_prediction(prediction):
-    for line in prediction:
-        line = line.lower()
-        if line.find(Direction.UP.value) != -1:
-            return Direction.UP
-        elif line.find(Direction.DOWN.value) != -1:
-            return Direction.DOWN
-        elif line.find(Direction.LEFT.value) != -1:
-            return Direction.LEFT
-        elif line.find(Direction.RIGHT.value) != -1:
-            return Direction.RIGHT
+def get_action_from_prediction(prediction):
+    for action in Action:
+        if prediction.contains(Action.value):
+            return action
 
-    return Direction.UNKNOWN
+    return Action.UNKNOWN
 
 
 def check_cost(prediction):
@@ -89,27 +83,12 @@ class VoiceModel:
         self.grammar.set_input_symbols(wsyms)
         self.grammar.set_output_symbols(wsyms)
 
-        # wordlist = ['zaklęcie', 'kula', 'ognia', 'leczenie', 'podnieś', 'przedmiot', 'do', 'w', 'prawo', 'lewo', 'góry', 'dołu']
-        # wordlist = ['lewo', 'prawo', 'góra', 'dół']
-
-        # s0 = self.grammar.add_state()
-        # s1 = self.grammar.add_state()
-        #
-        # self.grammar = add_arc(s0, s1, 'lewo', wsyms, self.grammar)
-        # self.grammar = add_arc(s0, s1, 'prawo', wsyms, self.grammar)
-        # self.grammar = add_arc(s0, s1, 'gora', wsyms, self.grammar)
-        # self.grammar = add_arc(s0, s1, 'dol', wsyms, self.grammar)
-        #
-        # self.grammar.set_start(s0)
-        # self.grammar.set_final(s1)
-
         s0 = self.grammar.add_state()
 
         s1 = self.grammar.add_state()
         s2 = self.grammar.add_state()
         s3 = self.grammar.add_state()
         s4 = self.grammar.add_state()
-
         s5 = self.grammar.add_state()
         s6 = self.grammar.add_state()
 
@@ -128,6 +107,8 @@ class VoiceModel:
 
         self.grammar = add_arc(s4, s6, 'prawo', wsyms, self.grammar)
         self.grammar = add_arc(s4, s6, 'lewo', wsyms, self.grammar)
+
+        self.grammar = add_arc(s2, s6, 'przedmiot', wsyms, self.grammar)
 
         self.grammar.set_start(s0)
         self.grammar.set_final(s6)

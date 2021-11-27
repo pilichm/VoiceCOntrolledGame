@@ -10,7 +10,7 @@ from pilichm.gameObjects.Constants import *
 from pilichm.gameObjects.Enemy import Enemy
 from pilichm.gameObjects.Player import Player
 from pilichm.gameObjects.Utils import load_fire_gif
-from pilichm.gameObjects.Direction import *
+from pilichm.gameObjects.Action import *
 
 
 class GameState:
@@ -79,6 +79,11 @@ class GameState:
 
             if self.enemy.life_count == 0:
                 self.screen[self.enemy.pos_x][self.enemy.pos_y] = SPRITE_GRASS_FILE
+
+    def player_heal(self):
+        if self.player.mana_count > 0:
+            self.player.mana_count -= 1
+            self.player.life_count += 1
 
     # Enemy attack may miss.
     def enemy_attack(self):
@@ -187,15 +192,21 @@ class GameState:
             end_image = PIL.Image.open(SCREEN_FAILURE_FILE)
         display(end_image)
 
-    def perform_player_action(self, direction):
-        if direction == Direction.RIGHT:
+    def perform_player_action(self, action):
+        if action == Action.MOVE_RIGHT:
             self.move_player_right()
-        elif direction == Direction.LEFT:
+        elif action == Action.MOVE_LEFT:
             self.move_player_left()
-        elif direction == Direction.UP:
+        elif action == Action.MOVE_UP:
             self.move_player_up()
-        elif direction == Direction.DOWN:
+        elif action == Action.MOVE_DOWN:
             self.move_player_down()
+        elif action == Action.SPELL_FIRE_BALL:
+            self.player_attack()
+        elif action == Action.SPELL_HEALING:
+            self.player_heal()
+        elif action == Action.PICK_UP_ITEM:
+            self.player.pick_up_sword(self.screen)
 
     # Play mock game run without voice commands.
     def run(self):

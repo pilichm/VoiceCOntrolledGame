@@ -5,6 +5,6 @@ if __name__ == "__main__":
     print("main() - START.")
 
     for i in range(20_000):
-        print(f"<eps> {i}")
+        print(f"{i} {i}")
 
     print("main() - END.")
