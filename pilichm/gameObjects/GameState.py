@@ -185,7 +185,7 @@ class GameState:
         if self.answer_attempts_count == 0:
             question_text = PIL.Image.open(f'{QUESTION_TEXT}1.png')
         else:
-            question_text = PIL.Image.open(f'{QUESTION_TEXT}1.png')
+            question_text = PIL.Image.open(f'{QUESTION_TEXT}2.png')
 
         new_image.paste(question_text, (2 * SPRITE_SIZE, 6 * SPRITE_SIZE))
 
