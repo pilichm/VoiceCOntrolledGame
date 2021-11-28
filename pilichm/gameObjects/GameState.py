@@ -20,6 +20,7 @@ class GameState:
         self.enemy = enemy
         self.has_ended = False
         self.is_won = False
+        self.answer_attempts_count = 0
 
     def move_player_up(self):
         self.player.move_up(self.screen)
@@ -183,6 +184,14 @@ class GameState:
         main_enemy_sprite = PIL.Image.open(f'{SPRITE_MAIN_ENEMY}1.png')
         new_image.paste(main_enemy_sprite, (8 * SPRITE_SIZE, 1 * SPRITE_SIZE))
 
+        # Display different text for first and second attempt.
+        if self.answer_attempts_count == 0:
+            question_text = PIL.Image.open(f'{SPRITE_MAIN_ENEMY}1.png')
+        else:
+            question_text = PIL.Image.open(f'{SPRITE_MAIN_ENEMY}1.png')
+
+        new_image.paste(question_text, (2 * SPRITE_SIZE, 6 * SPRITE_SIZE))
+
         # Add frames for main enemy animation.
         frames = []
         for i in range(2, 4):
@@ -194,8 +203,6 @@ class GameState:
         new_image.save(f"{RESOURCES_DIR}screens/result.gif", save_all=True, append_images=frames, duration=100, loop=0)
         clear_output()
         display(IPython.display.Image(open(f"{RESOURCES_DIR}screens/result.gif", 'rb').read()))
-        self.has_ended = False
-        self.is_won = False
 
     def check_has_ended(self):
         if self.player.life_count <= 0:
@@ -205,7 +212,6 @@ class GameState:
 
         if self.screen[self.player.pos_x + 1][self.player.pos_y] in [SPRITE_BOOK_FILE]:
             self.has_ended = True
-            self.is_won = True
             return
 
     def display_end_screen(self):
@@ -215,6 +221,13 @@ class GameState:
         else:
             end_image = PIL.Image.open(SCREEN_FAILURE_FILE)
         display(end_image)
+
+    def check_player_answer(self, answer):
+        if answer == Action.ANSWER_CORRECT:
+            self.is_won = True
+
+        if answer != Action.EMPTY:
+            self.answer_attempts_count += 1
 
     def perform_player_action(self, action):
         if action == Action.MOVE_RIGHT:

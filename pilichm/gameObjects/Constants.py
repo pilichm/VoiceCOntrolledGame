@@ -33,6 +33,7 @@ MAIN_BACKGROUND_FILE = f'{RESOURCES_DIR}/screens/main_screen.png'
 SCREEN_VICTORY_FILE = f'{RESOURCES_DIR}/screens/game_win_screen.jpg'
 SCREEN_FAILURE_FILE = f'{RESOURCES_DIR}/screens/game_lose_screen.jpg'
 SCREEN_QUESTION_BACKGROUND = f'{RESOURCES_DIR}/screens/main_screen_question.png'
+QUESTION_TEXT = f'{RESOURCES_DIR}/screens/queation_attempt_'
 
 # Mana bottle and count.
 SPRITE_MANA_BOTTLE = f'{RESOURCES_DIR}mana/mana_bottle.png'
