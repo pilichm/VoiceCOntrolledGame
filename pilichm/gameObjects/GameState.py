@@ -167,9 +167,6 @@ class GameState:
         frames = []
         frames = self.get_animation_sprites(frames, new_image)
 
-        if len(frames) == 0:
-            frames.append(background)
-
         new_image.save(f"{RESOURCES_DIR}screens/result.gif", save_all=True, append_images=frames, duration=100, loop=0)
         clear_output()
         display(IPython.display.Image(open(f"{RESOURCES_DIR}screens/result.gif", 'rb').read()))
