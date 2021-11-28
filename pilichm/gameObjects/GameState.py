@@ -90,10 +90,10 @@ class GameState:
     def enemy_attack(self):
         condition_one = self.enemy.pos_x + 1 == self.player.pos_x
         condition_two = self.enemy.pos_x - 1 == self.player.pos_x
-        condition_three = self.enemy.pos_y + 1 == self.player.pos_y
-        condition_four = self.enemy.pos_y - 1 == self.player.pos_y
+        # condition_three = self.enemy.pos_y + 1 == self.player.pos_y
+        # condition_four = self.enemy.pos_y - 1 == self.player.pos_y
 
-        if condition_one or condition_two or condition_three or condition_four:
+        if condition_one or condition_two: # or condition_three or condition_four:
             if random.randint(3, 9) % 2 == 0:
                 self.player.life_count -= 1
                 self.player.is_attacked = True
